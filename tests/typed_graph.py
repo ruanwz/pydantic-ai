@@ -1,7 +1,8 @@
 from __future__ import annotations as _annotations
 
 from dataclasses import dataclass
-from typing import assert_type
+
+from typing_extensions import assert_type
 
 from pydantic_ai_graph import BaseNode, End, Graph, GraphContext
 
@@ -69,5 +70,5 @@ g3 = Graph(
 # because String2Length came before Double, the output type is Any
 assert_type(g3, Graph[None, X])
 
-Graph[None, float, bytes](Float2String, String2Length, Double)  # type: ignore[arg-type]
-Graph[None, int, str](Double)  # type: ignore[arg-type]
+Graph[None, bytes](Float2String, String2Length, Double)  # type: ignore[arg-type]
+Graph[None, str](Double)  # type: ignore[arg-type]
