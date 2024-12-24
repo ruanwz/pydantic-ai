@@ -21,9 +21,10 @@ from . import (
     messages as _messages,
     models,
     result,
+    usage as _usage,
 )
 from .result import ResultData
-from .settings import ModelSettings, UsageLimits, merge_model_settings
+from .settings import ModelSettings, merge_model_settings
 from .tools import (
     AgentDeps,
     RunContext,
@@ -183,8 +184,8 @@ class Agent(Generic[AgentDeps, ResultData]):
         model: models.Model | models.KnownModelName | None = None,
         deps: AgentDeps = None,
         model_settings: ModelSettings | None = None,
-        usage_limits: UsageLimits | None = None,
-        usage: result.Usage | None = None,
+        usage_limits: _usage.UsageLimits | None = None,
+        usage: _usage.Usage | None = None,
         infer_name: bool = True,
     ) -> result.RunResult[ResultData]:
         """Run the agent with a user prompt in async mode.
@@ -228,7 +229,7 @@ class Agent(Generic[AgentDeps, ResultData]):
             model_name=model_used.name(),
             agent_name=self.name or 'agent',
         ) as run_span:
-            run_context = RunContext(deps, 0, [], None, model_used, usage or result.Usage())
+            run_context = RunContext(deps, 0, [], None, model_used, usage or _usage.Usage())
             messages = await self._prepare_messages(user_prompt, message_history, run_context)
             run_context.messages = messages
 
@@ -236,7 +237,7 @@ class Agent(Generic[AgentDeps, ResultData]):
                 tool.current_retry = 0
 
             model_settings = merge_model_settings(self.model_settings, model_settings)
-            usage_limits = usage_limits or UsageLimits()
+            usage_limits = usage_limits or _usage.UsageLimits()
 
             run_step = 0
             while True:
@@ -287,8 +288,8 @@ class Agent(Generic[AgentDeps, ResultData]):
         model: models.Model | models.KnownModelName | None = None,
         deps: AgentDeps = None,
         model_settings: ModelSettings | None = None,
-        usage_limits: UsageLimits | None = None,
-        usage: result.Usage | None = None,
+        usage_limits: _usage.UsageLimits | None = None,
+        usage: _usage.Usage | None = None,
         infer_name: bool = True,
     ) -> result.RunResult[ResultData]:
         """Run the agent with a user prompt synchronously.
@@ -345,8 +346,8 @@ class Agent(Generic[AgentDeps, ResultData]):
         model: models.Model | models.KnownModelName | None = None,
         deps: AgentDeps = None,
         model_settings: ModelSettings | None = None,
-        usage_limits: UsageLimits | None = None,
-        usage: result.Usage | None = None,
+        usage_limits: _usage.UsageLimits | None = None,
+        usage: _usage.Usage | None = None,
         infer_name: bool = True,
     ) -> AsyncIterator[result.StreamedRunResult[AgentDeps, ResultData]]:
         """Run the agent with a user prompt in async mode, returning a streamed response.
@@ -393,7 +394,7 @@ class Agent(Generic[AgentDeps, ResultData]):
             model_name=model_used.name(),
             agent_name=self.name or 'agent',
         ) as run_span:
-            run_context = RunContext(deps, 0, [], None, model_used, usage or result.Usage())
+            run_context = RunContext(deps, 0, [], None, model_used, usage or _usage.Usage())
             messages = await self._prepare_messages(user_prompt, message_history, run_context)
             run_context.messages = messages
 
@@ -401,7 +402,7 @@ class Agent(Generic[AgentDeps, ResultData]):
                 tool.current_retry = 0
 
             model_settings = merge_model_settings(self.model_settings, model_settings)
-            usage_limits = usage_limits or UsageLimits()
+            usage_limits = usage_limits or _usage.UsageLimits()
 
             run_step = 0
             while True:
