@@ -3,7 +3,7 @@ from __future__ import annotations as _annotations
 from abc import abstractmethod
 from dataclasses import dataclass
 from functools import cache
-from typing import Any, ClassVar, Generic, get_origin, get_type_hints
+from typing import Any, Generic, get_origin, get_type_hints
 
 from typing_extensions import Never, TypeVar
 
@@ -29,15 +29,9 @@ class End(Generic[RunEndT]):
 
     data: RunEndT
 
-    @classmethod
-    def get_id(cls) -> str:
-        return 'End'
-
 
 class BaseNode(Generic[StateT, NodeRunEndT]):
     """Base class for a node."""
-
-    _node_id: ClassVar[str | None] = None
 
     @abstractmethod
     async def run(self, ctx: GraphContext[StateT]) -> BaseNode[StateT, Any] | End[NodeRunEndT]: ...
@@ -45,7 +39,7 @@ class BaseNode(Generic[StateT, NodeRunEndT]):
     @classmethod
     @cache
     def get_id(cls) -> str:
-        return cls._node_id or cls.__name__
+        return cls.__name__
 
     @classmethod
     def get_node_def(cls, local_ns: dict[str, Any] | None) -> NodeDef[StateT, NodeRunEndT]:

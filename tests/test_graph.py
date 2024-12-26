@@ -16,14 +16,14 @@ pytestmark = pytest.mark.anyio
 
 async def test_graph():
     @dataclass
-    class Float2String(BaseNode[None]):
+    class Float2String(BaseNode):
         input_data: float
 
         async def run(self, ctx: GraphContext) -> String2Length:
             return String2Length(str(self.input_data))
 
     @dataclass
-    class String2Length(BaseNode[None]):
+    class String2Length(BaseNode):
         input_data: str
 
         async def run(self, ctx: GraphContext) -> Double:

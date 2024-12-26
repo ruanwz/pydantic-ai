@@ -8,7 +8,7 @@ from pydantic_ai_graph import BaseNode, End, Graph, GraphContext
 
 
 @dataclass
-class Float2String(BaseNode[None]):
+class Float2String(BaseNode):
     input_data: float
 
     async def run(self, ctx: GraphContext) -> String2Length:
@@ -16,7 +16,7 @@ class Float2String(BaseNode[None]):
 
 
 @dataclass
-class String2Length(BaseNode[None]):
+class String2Length(BaseNode):
     input_data: str
 
     async def run(self, ctx: GraphContext) -> Double:

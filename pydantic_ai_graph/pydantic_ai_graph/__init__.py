@@ -1,6 +1,6 @@
 from .graph import Graph, GraphRun, GraphRunner
 from .nodes import BaseNode, End, GraphContext
-from .state import AbstractState, EndEvent, GraphHistoryItem, Step
+from .state import AbstractState, EndEvent, Step, StepOrEnd
 
 __all__ = (
     'Graph',
@@ -11,6 +11,6 @@ __all__ = (
     'GraphContext',
     'AbstractState',
     'EndEvent',
-    'GraphHistoryItem',
+    'StepOrEnd',
     'Step',
 )

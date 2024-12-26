@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Generic, Literal, Union
 
 from typing_extensions import Never, TypeVar
 
-__all__ = 'AbstractState', 'StateT', 'Step', 'EndEvent', 'GraphHistoryItem'
+__all__ = 'AbstractState', 'StateT', 'Step', 'EndEvent', 'StepOrEnd'
 
 if TYPE_CHECKING:
     from pydantic_ai_graph import BaseNode
@@ -60,4 +60,4 @@ class EndEvent(Generic[StateT, RunEndT]):
         self.state = copy.deepcopy(self.state)
 
 
-GraphHistoryItem = Union[Step[StateT, RunEndT], EndEvent[StateT, RunEndT]]
+StepOrEnd = Union[Step[StateT, RunEndT], EndEvent[StateT, RunEndT]]
