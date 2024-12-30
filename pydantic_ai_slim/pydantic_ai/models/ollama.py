@@ -71,6 +71,7 @@ class OllamaModel(Model):
         model_name: OllamaModelName,
         *,
         base_url: str | None = 'http://localhost:11434/v1/',
+        api_key: str = 'ollama',
         openai_client: AsyncOpenAI | None = None,
         http_client: AsyncHTTPClient | None = None,
     ):
@@ -96,7 +97,7 @@ class OllamaModel(Model):
         else:
             # API key is not required for ollama but a value is required to create the client
             http_client_ = http_client or cached_async_http_client()
-            oai_client = AsyncOpenAI(base_url=base_url, api_key='ollama', http_client=http_client_)
+            oai_client = AsyncOpenAI(base_url=base_url, api_key=api_key, http_client=http_client_)
             self.openai_model = OpenAIModel(model_name=model_name, openai_client=oai_client)
 
     async def agent_model(
