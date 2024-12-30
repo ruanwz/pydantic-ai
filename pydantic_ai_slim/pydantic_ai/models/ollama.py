@@ -84,6 +84,8 @@ class OllamaModel(Model):
             model_name: The name of the Ollama model to use. List of models available [here](https://ollama.com/library)
                 You must first download the model (`ollama pull <MODEL-NAME>`) in order to use the model
             base_url: The base url for the ollama requests. The default value is the ollama default
+            api_key: The API key to use for authentication. Defaults to 'ollama' for local instances,
+                but can be customized for proxy setups that require authentication
             openai_client: An existing
                 [`AsyncOpenAI`](https://github.com/openai/openai-python?tab=readme-ov-file#async-usage)
                 client to use, if provided, `base_url` and `http_client` must be `None`.
